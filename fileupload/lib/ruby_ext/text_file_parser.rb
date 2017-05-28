@@ -3,8 +3,6 @@ class TextFileParser
   require 'csv'
   require 'date'
   
-  attr_accessor :uploadedFile, :originalFileName, :fieldSeparator, :headerLinesQtty, :rowCallbackMethod, :saveCopy, :saveCopyBasePath
-  
   def initialize( uploadedFile, originalFileName, fieldSeparator, headerLinesQtty, rowCallbackMethod, saveCopy, saveCopyBasePath )
     @uploadedFile = uploadedFile
     @originalFileName = originalFileName
@@ -36,7 +34,7 @@ class TextFileParser
     
     processing_file = @uploadedFile
     
-    if ( saveCopy )
+    if ( @saveCopy )
       processing_file = saveCopyOfFile
     end
     
