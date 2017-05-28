@@ -2,8 +2,6 @@ class UploadController < ApplicationController
   
   require 'bigdecimal'
   
-  attr_accessor :total_value
-  
   def index
     render :file => 'app/views/upload/uploadfile.html.erb'
   end
@@ -18,11 +16,16 @@ class UploadController < ApplicationController
 
     @total_value = BigDecimal.new("0")
     
-    text_file_parser = TextFileParser.new( uploaded_io['datafile'].tempfile, uploaded_io['datafile'].original_filename, { :col_sep => "\t" }, 1, method(:rowParser), true, nil )
+    begin
+      text_file_parser = TextFileParser.new( uploaded_io['datafile'].tempfile, uploaded_io['datafile'].original_filename, { :col_sep => "\t" }, 1, method(:rowParser), true, nil ).parseFile
     
-    text_file_parser.parseFile
-    
-    render plain: "File has been uploaded successfully and total value is: " + @total_value.to_s
+      render plain: "File has been uploaded successfully and total value is: " + @total_value.to_s
+      
+    rescue Exception => e
+      
+      render plain: 'Failure [' + e.message + '] detected while parsing file: ' + e.backtrace.inspect
+      
+    end
     
   end
   

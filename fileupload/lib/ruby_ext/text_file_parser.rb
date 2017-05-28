@@ -32,6 +32,8 @@ class TextFileParser
     
     puts 'Starging file parsing process...'
     
+    # TODO: Check mime type and throw specific exception.
+    
     processing_file = @uploadedFile
     
     if ( saveCopy )
