@@ -1,12 +1,13 @@
-class CsvParser
+class TextFileParser
   
   require 'csv'
   require 'date'
   
-  attr_accessor :uploadedFile, :fieldSeparator, :headerLinesQtty, :rowCallbackMethod, :saveCopy, :saveCopyBasePath
+  attr_accessor :uploadedFile, :originalFileName, :fieldSeparator, :headerLinesQtty, :rowCallbackMethod, :saveCopy, :saveCopyBasePath
   
-  def initialize( uploadedFile, fieldSeparator, headerLinesQtty, rowCallbackMethod, saveCopy, saveCopyBasePath )
+  def initialize( uploadedFile, originalFileName, fieldSeparator, headerLinesQtty, rowCallbackMethod, saveCopy, saveCopyBasePath )
     @uploadedFile = uploadedFile
+    @originalFileName = originalFileName
     @fieldSeparator = fieldSeparator
     @headerLinesQtty = headerLinesQtty
     @rowCallbackMethod = rowCallbackMethod
@@ -18,6 +19,7 @@ class CsvParser
     end
     
     puts 'uploadedFile = ' + @uploadedFile.to_s
+    puts 'originalFileName = ' + @originalFileName.to_s
     puts 'fieldSeparator = ' + @fieldSeparator.to_s
     puts 'headerLinesQtty = ' + @headerLinesQtty.to_s
     puts 'rowCallbackMethod = ' + @rowCallbackMethod.to_s
@@ -28,9 +30,9 @@ class CsvParser
   
   def parseFile
     
-    puts 'Parsing file...'
+    puts 'Starging file parsing process...'
     
-    processing_file = @uploadedFile.original_filename
+    processing_file = @uploadedFile
     
     if ( saveCopy )
       processing_file = saveCopyOfFile
@@ -65,10 +67,15 @@ class CsvParser
     
     puts 'Creating file copy...'
     
-    current_date = Date.parse(Time.now.to_s)
+    current_date = DateTime.parse(Time.now.to_s)
     
-    file_extension = File.extname( @uploadedFile.original_filename )
-    file_base_name = File.basename( @uploadedFile.original_filename, file_extension )
+    if ( @originalFileName.to_s.empty? )
+      file_extension = File.extname( File.basename( @uploadedFile ) )
+      file_base_name = File.basename( File.basename( @uploadedFile ), file_extension )
+    else
+      file_extension = File.extname( @originalFileName )
+      file_base_name = File.basename( @originalFileName, file_extension )
+    end
     
     puts 'file_extension = ' + file_extension
     puts 'file_base_name = ' + file_base_name
