@@ -4,6 +4,7 @@ class TextFileParser
   require 'date'
   
   def initialize( uploadedFile, originalFileName, fieldSeparator, headerLinesQtty, rowCallbackMethod, saveCopy, saveCopyBasePath )
+    
     @uploadedFile = uploadedFile
     @originalFileName = originalFileName
     @fieldSeparator = fieldSeparator
@@ -92,3 +93,4 @@ class TextFileParser
   end
   
 end
+
