@@ -1,0 +1,3 @@
+class InvalidFileMimeTypeError < ArgumentError
+end
+

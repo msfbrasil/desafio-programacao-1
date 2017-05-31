@@ -27,12 +27,24 @@ class UploadController < ApplicationController
          
          saleRecord.save
       }
-    
+      
       render plain: "File has been uploaded successfully and total value is: " + @total_value.to_s
       
-    rescue Exception => e
+    rescue InvalidFileMimeTypeError => ifmte
       
-      render plain: 'Failure [' + e.message + '] detected while parsing file: ' + e.backtrace.inspect
+      render plain: 'Failure detected while parsing file with message: ' + ifmte.message
+      
+    rescue WrongNumberOfColumnsError => wnoce
+      
+      render plain: 'Failure detected while parsing file with message: ' + wnoce.message
+      
+    rescue InvalidFieldError => ife
+      
+      render plain: 'Failure detected while parsing file with message: ' + ife.message
+      
+    rescue InvalidFileFormatError => iffe
+      
+      render plain: 'Failure detected while parsing file with message: ' + iffe.message
       
     end
     

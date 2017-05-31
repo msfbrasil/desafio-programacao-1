@@ -1,0 +1,3 @@
+class InvalidFileFormatError < ArgumentError
+end
+

@@ -2,6 +2,7 @@ class TextFileParser
   
   require 'csv'
   require 'date'
+  require 'filemagic'
   
   def initialize( uploadedFile, originalFileName, fieldSeparator, headerLinesQtty, rowCallbackMethod, saveCopy, saveCopyBasePath )
     
@@ -31,7 +32,12 @@ class TextFileParser
     
     puts 'Starging file parsing process...'
     
-    # TODO: Check mime type and throw specific exception.
+    puts 'Detecting mime type for file = ' + File.absolute_path( @uploadedFile )
+    puts 'File mime type = ' + FileMagic.new(FileMagic::MAGIC_MIME).file( File.absolute_path( @uploadedFile ), true )
+    
+    if ( !FileMagic.new(FileMagic::MAGIC_MIME).file( File.absolute_path( @uploadedFile ), true ).eql? 'text/plain' )
+      raise InvalidFileMimeTypeError, 'Provided file has invalid mime type [' + FileMagic.new(FileMagic::MAGIC_MIME).file( File.absolute_path( @uploadedFile ), true ) + '].'
+    end
     
     processing_file = @uploadedFile
     
@@ -41,23 +47,31 @@ class TextFileParser
     
     puts 'Processing file = ' + processing_file.to_s
     
-    tabbed_rows = nil
-    if ( @fieldSeparator.to_s.empty? )
-      tabbed_rows = CSV.read(processing_file)
-    else
-      tabbed_rows = CSV.read(processing_file, @fieldSeparator)
-    end
-    
-    $index = 0
-    
-    while $index < @headerLinesQtty do
-      tabbed_rows.shift
-      $index += 1
-    end
-    
-    tabbed_rows.each do |row|
+    begin
       
-      @rowCallbackMethod.call( row )
+      tabbed_rows = nil
+      if ( @fieldSeparator.to_s.empty? )
+        tabbed_rows = CSV.read(processing_file)
+      else
+        tabbed_rows = CSV.read(processing_file, @fieldSeparator)
+      end
+      
+      $index = 0
+      
+      while $index < @headerLinesQtty do
+        tabbed_rows.shift
+        $index += 1
+      end
+      
+      tabbed_rows.each do |row|
+        
+        @rowCallbackMethod.call( row )
+        
+      end
+      
+    rescue CSV::MalformedCSVError => e
+      
+      raise InvalidFileFormatError, 'Provided file thrown malformed CSV error with message: ' + e.message
       
     end
     

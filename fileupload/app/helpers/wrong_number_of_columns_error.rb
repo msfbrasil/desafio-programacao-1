@@ -1,0 +1,3 @@
+class WrongNumberOfColumnsError < ArgumentError
+end
+

@@ -16,6 +16,7 @@ class SaleRecordFileParser
     puts 'Starging sale records file parsing process...'
     
     @saleRecordsList = Array.new
+    @rowNumber = 1
 
     TextFileParser.new( @uploadedFile, @originalFileName, { :col_sep => "\t" }, 1, method(:rowParser), true, nil ).parseFile
     
@@ -25,10 +26,11 @@ class SaleRecordFileParser
   
   def rowParser( row )
     
-    puts 'Row is of class type: ' + row.class.to_s
-    puts 'Row has ' + row.length.to_s + ' itens, which are:'
+    if ( row.length != 6 )
+      raise WrongNumberOfColumnsError, 'Row [' + @rowNumber.to_s + '] has wrong number of columns [' + row.length.to_s + '].'
+    end
     
-    # TODO: Throw specific exception when the number of columns don't match.
+    puts 'Row has ' + row.length.to_s + ' columns, which are:'
     
     puts 'Purchaser name: ' + row[0]
     puts 'Item description: ' + row[1]
@@ -40,12 +42,22 @@ class SaleRecordFileParser
     @saleRecord = SaleRecord.new
     @saleRecord.purchaser_name = row[0]
     @saleRecord.item_description = row[1]
-    @saleRecord.item_price = BigDecimal.new( row[2] )
-    @saleRecord.purchase_count = row[3].to_i
+    begin
+      @saleRecord.item_price = BigDecimal.new( row[2] )
+    rescue ArgumentError
+      raise InvalidFieldError, 'Item price with invalid value [' + row[2] + '] at row [' + @rowNumber.to_s + '].'
+    end
+    begin
+      @saleRecord.purchase_count = row[3].to_i
+    rescue ArgumentError
+      raise InvalidFieldError, 'Purchase count with invalid value [' + row[3] + '] at row [' + @rowNumber.to_s + '].'
+    end
     @saleRecord.merchant_address = row[4]
     @saleRecord.merchant_name = row[5]
     
     @saleRecordsList << @saleRecord
+    
+    @rowNumber += 1
     
   end
   
