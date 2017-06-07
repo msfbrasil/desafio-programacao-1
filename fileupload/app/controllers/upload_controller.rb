@@ -9,6 +9,14 @@ class UploadController < ApplicationController
   def uploadFile
     
     uploaded_io = params[:uploadedFile]
+    
+    if ( !uploaded_io )
+      
+      render plain: "A file must be provided!"
+      
+      return
+      
+    end
 
     #puts 'Uploaded_io is a Class of type: ' + uploaded_io.class.to_s
     #puts 'Uploaded_io[datafile] is a Class of type: ' + uploaded_io['datafile'].class.to_s
