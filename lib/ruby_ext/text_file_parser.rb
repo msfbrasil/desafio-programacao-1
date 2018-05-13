@@ -4,6 +4,7 @@ class TextFileParser
   require 'csv'
   require 'date'
   require 'filemagic'
+  #require '../exceptions'
   
   # Initializes the parser.
   # Params:
@@ -47,7 +48,7 @@ class TextFileParser
     puts 'File mime type = ' + FileMagic.new(FileMagic::MAGIC_MIME).file( File.absolute_path( @parsingFile ), true )
     
     if ( !FileMagic.new(FileMagic::MAGIC_MIME).file( File.absolute_path( @parsingFile ), true ).eql? 'text/plain' )
-      raise InvalidFileMimeTypeError, 'Provided file has invalid mime type [' + FileMagic.new(FileMagic::MAGIC_MIME).file( File.absolute_path( @parsingFile ), true ) + '].'
+      raise Exceptions::InvalidFileMimeTypeError, 'Provided file has invalid mime type [' + FileMagic.new(FileMagic::MAGIC_MIME).file( File.absolute_path( @parsingFile ), true ) + '].'
     end
     
     processing_file = @parsingFile
@@ -82,7 +83,7 @@ class TextFileParser
       
     rescue CSV::MalformedCSVError => e
       
-      raise InvalidFileFormatError, 'Provided file thrown malformed CSV error with message: ' + e.message
+      raise Exceptions::InvalidFileFormatError, 'Provided file thrown malformed CSV error with message: ' + e.message
       
     end
     

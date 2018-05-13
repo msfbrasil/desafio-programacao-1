@@ -1,3 +1,0 @@
-class WrongNumberOfColumnsError < ArgumentError
-end
-

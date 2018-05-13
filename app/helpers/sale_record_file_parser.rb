@@ -27,7 +27,7 @@ class SaleRecordFileParser
   def rowParser( row )
     
     if ( row.length != 6 )
-      raise WrongNumberOfColumnsError, 'Row [' + @rowNumber.to_s + '] has wrong number of columns [' + row.length.to_s + '].'
+      raise Exceptions::WrongNumberOfColumnsError, 'Row [' + @rowNumber.to_s + '] has wrong number of columns [' + row.length.to_s + '].'
     end
     
     puts 'Row has ' + row.length.to_s + ' columns, which are:'
@@ -44,13 +44,13 @@ class SaleRecordFileParser
     @saleRecord.item_description = row[1]
     begin
       @saleRecord.item_price = BigDecimal.new( row[2] )
-    rescue ArgumentError
-      raise InvalidFieldError, 'Item price with invalid value [' + row[2] + '] at row [' + @rowNumber.to_s + '].'
+    rescue StandardError
+      raise Exceptions::InvalidFieldError, 'Item price with invalid value [' + row[2] + '] at row [' + @rowNumber.to_s + '].'
     end
     begin
-      @saleRecord.purchase_count = row[3].to_i
-    rescue ArgumentError
-      raise InvalidFieldError, 'Purchase count with invalid value [' + row[3] + '] at row [' + @rowNumber.to_s + '].'
+      @saleRecord.purchase_count = Integer( row[3] )
+    rescue StandardError
+      raise Exceptions::InvalidFieldError, 'Purchase count with invalid value [' + row[3] + '] at row [' + @rowNumber.to_s + '].'
     end
     @saleRecord.merchant_address = row[4]
     @saleRecord.merchant_name = row[5]

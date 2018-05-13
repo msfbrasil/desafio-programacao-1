@@ -2,6 +2,7 @@ module Pages
   class SaleRecordsController < ApplicationController
     
     require 'bigdecimal'
+    require 'exceptions'
     
     def index
     end
@@ -42,7 +43,7 @@ module Pages
         
         redirect_to pages_salerecords_path
         
-      rescue Exception => e
+      rescue StandardError => e
         
         flash[:danger] = "Failure detected while parsing file with message: " + e.message
         
