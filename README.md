@@ -14,7 +14,7 @@ sudo apt-get install libmagic-dev
 
 The application must be started with SSL support, which is mandatory now for Facebook authentication delegation. Because of that, the openssl package must be installed through the following commands:
 
-Important: it's advisable to uninstall "puma" gem before installing, and reinstall it right after the dependecies are in place. Honestly this was a recomendation I've found on a site with instructions to start the server with SSL. I folowed the instructions and had no problems. I don't know if the uninstall/install procedure is really necessary.
+Important: it's advisable to uninstall "puma" gem before installing openssl packages, and reinstall it right after. Honestly this was a recomendation I've found on a site with instructions to start the server with SSL. I folowed the instructions and had no problems. I don't know if the uninstall/install procedure of "puma" gem is really necessary.
 
 sudo apt-get install openssl
 sudo apt-get install libssl-dev
