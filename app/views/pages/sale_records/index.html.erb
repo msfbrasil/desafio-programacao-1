@@ -1,0 +1,9 @@
+<div class="jumbotron">
+  <h1>SalesRecord File Upload!</h1>
+  <%= form_tag({:action => 'upload_file'}, :multipart => true) do %>
+  <p><label for="upload_file">Select File</label>
+  <%= file_field 'uploadedFile', 'datafile' %></p>
+  <%= submit_tag "Upload" %>
+  <% end %>
+</div>
+

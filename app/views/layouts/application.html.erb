@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <title>SaleRecords Uploader</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  
+  <body>
+  
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <%= link_to 'SaleRecords Uploader', root_path, class: 'navbar-brand' %>
+        </div>
+        <div id="navbar">
+          <% if current_user %>
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="/pages/salerecords">Sale Records</a></li>
+            </ul>
+            <ul class="nav navbar-nav pull-right">
+              <li><%= image_tag current_user.image_url, alt: current_user.name %></li>
+              <li><%= link_to 'Log Out', logout_path, method: :delete %></li>
+            </ul>
+          <% else %>
+            <ul class="nav navbar-nav pull-right">
+              <li><%= link_to 'Facebook', '/auth/facebook' %></li>
+              <li><%= link_to 'Twitter', '/auth/twitter' %></li>
+            </ul>
+          <% end %>
+        </div>
+      </div>
+    </nav>
+    
+    <div class="container">
+      <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>">
+          <%= value %>
+        </div>
+      <% end %>
+      
+      <%= yield %>
+    </div>
+
+  </body>
+  
+</html>

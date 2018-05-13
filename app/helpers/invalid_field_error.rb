@@ -1,0 +1,3 @@
+class InvalidFieldError < ArgumentError
+end
+
