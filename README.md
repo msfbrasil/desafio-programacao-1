@@ -42,19 +42,19 @@ A criação de aplicações para delegação de autenticação no Facebook e Twi
 
 Os passos para criação da aplicação Facebook não estão tão atualizados, mas seguem abaixo:
 
-1. Acesse: https://developers.facebook.com/.\
-2. Utilize a opção "Adicionar novo aplicativo" do menu "Meus Aplicativos" no canto superior direito.\
-3. Entre com um nome para a sua aplicação e o seu email de contato e clique em "Criar Identificação do Aplicativo".\
-4. Na lista de produtos para adição, clique no botão "Configurar" do produto "Login do Facebook".\
-5. A próxima tela pergunta a plataforma dessa aplicação. Escolha "www" ou "Web".\
-6. Informe a URL do site. No nosso caso https://localhost:3000/. Clique em salvar.\
-7. Desconsidere as outras abas da configuração inicial e acesse a opção "Configurações\Básico" do lado esquerdo da tela.\
-8. Informe "localhost" no campo "Domínios do Aplicativo" e clique em "Salvar Alterações".\
-9. Clique no produto "Login do Facebook" (do lado esquerdo e mais abaixo), e acesse a opção "Configurações".\
-10. Informe "https://localhost:3000/auth/facebook/callback" no campo "URIs de redirecionamento do OAuth válidos" e clique em "Salvar Alterações".\
-11. Retorne à opção "Configurações\Básico" (no canto esquerdo e superior) e informe alguma URL válida no campo "URL da Política de Privacidade" e clique em "Salvar Alterações" (isso é necessário para o último passo que é a ativação da aplicação).\
-12. No topo da tela clique em "Desativado" para ativar a aplicação. Escolha uma categoria e cliente em "Confirmar".\
-13. Ufa... É isso aí. A sua aplicação deve estar pronta para uso!!!!! Basta você pegar a chave "key" no campo "ID do Aplicativo" e o segredo "secret" no campo "Chave Secreta do Aplicativo" acessando novamente a opção "Configurações\Básico" (no canto esquerdo e superior).\
+1. Acesse: https://developers.facebook.com/.
+2. Utilize a opção "Adicionar novo aplicativo" do menu "Meus Aplicativos" no canto superior direito.
+3. Entre com um nome para a sua aplicação e o seu email de contato e clique em "Criar Identificação do Aplicativo".
+4. Na lista de produtos para adição, clique no botão "Configurar" do produto "Login do Facebook".
+5. A próxima tela pergunta a plataforma dessa aplicação. Escolha "www" ou "Web".
+6. Informe a URL do site. No nosso caso https://localhost:3000/. Clique em salvar.
+7. Desconsidere as outras abas da configuração inicial e acesse a opção "Configurações\Básico" do lado esquerdo da tela.
+8. Informe "localhost" no campo "Domínios do Aplicativo" e clique em "Salvar Alterações".
+9. Clique no produto "Login do Facebook" (do lado esquerdo e mais abaixo), e acesse a opção "Configurações".
+10. Informe "https://localhost:3000/auth/facebook/callback" no campo "URIs de redirecionamento do OAuth válidos" e clique em "Salvar Alterações".
+11. Retorne à opção "Configurações\Básico" (no canto esquerdo e superior) e informe alguma URL válida no campo "URL da Política de Privacidade" e clique em "Salvar Alterações" (isso é necessário para o último passo que é a ativação da aplicação).
+12. No topo da tela clique em "Desativado" para ativar a aplicação. Escolha uma categoria e cliente em "Confirmar".
+13. Ufa... É isso aí. A sua aplicação deve estar pronta para uso!!!!! Basta você pegar a chave "key" no campo "ID do Aplicativo" e o segredo "secret" no campo "Chave Secreta do Aplicativo" acessando novamente a opção "Configurações\Básico" (no canto esquerdo e superior).
 
 ## Passos finais
 
