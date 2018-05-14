@@ -1,4 +1,8 @@
 class User < ApplicationRecord
+  validates :provider, presence: true
+  validates :uid, presence: true
+  validates :provider, uniqueness: { scope: :uid }
+  
   class << self
     def from_omniauth(auth_hash)
       user = find_or_create_by(uid: auth_hash['uid'], provider: auth_hash['provider'])

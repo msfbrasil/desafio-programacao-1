@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  provider: facebook
+  uid: 2344534556
+  name: Facebook User
+  location: 
+  image_url: https://www.facebook.com/facebook_user/image.png
+  url: 
+
+two:
+  provider: twitter
+  uid: 4545787645336
+  name: Twitter User
+  location: 
+  image_url: https://abs.twimg.com/sticky/default_profile_image.png
+  url: https://twitter.com/twitter_user
