@@ -1,47 +1,83 @@
-# Rails Challenge
+# Desafio de Programação
 
-## Details
+## Informações iniciais
 
-This little peace of code was built using ruby 2.3.1 and rails 5.2.0.
+Essa aplicação foi construída utilizando-se ruby 2.3.1 e rails 5.2.0.
 
-For that reason, those guys are, therefore, expected to be considered as dependencies to validate the current implementation.
+Algumas bibliotecas foram utilizadas para melhorar o aspecto geral da solução e prover algumas funcionalidades, como:
 
-## Dependencies
+- Bootstrap: interface
+- Omniauth: delegação de autenticação do Facebook, Twitter, etc.
 
-First of all, we need to install a dependency of "ruby-filemagic" gem used on project through the command:
+Assim que a aplicação for executada, basta autenticar no sistema utilizando a rede social desejada e acessar o menu "Sale Records" que apresentará uma tela para upload do arquivo.
+
+Alguns exemplos de arquivos com informações inválidas ou quantidade de colunas errada, etc, podem ser encontrados na pasta test/resources.
+
+## Dependencias
+
+Uma das validações que achei relevante realizar antes do processamento do arquivo foi a validação do "MIME type". Para isso, foi utilizada a biblioteca "ruby-filemagic" que, por sua vez, exigiu a instalação do pacote de dependência abaixo:
 
 sudo apt-get install libmagic-dev
 
-The application must be started with SSL support, which is mandatory now for Facebook authentication delegation. Because of that, the openssl package must be installed through the following commands:
+Essa aplicação precisa ser iniciada com suporte a SSL, o que se tornou obrigatório no processo de delegação de autenticação do Facebook. Por conta disso, o pacote openssl precisa ser instalado através dos seguintes comandos:
 
-Important: it's advisable to uninstall "puma" gem before installing openssl packages, and reinstall it right after. Honestly this was a recomendation I've found on a site with instructions to start the server with SSL. I folowed the instructions and had no problems. I don't know if the uninstall/install procedure of "puma" gem is really necessary.
+Importante: 
+Encontrei instruções que recomendavam a desinstalação do "puma" ("gem uninstall puma") antes de instalar os pacotes do SSL, e reinstalação ("gem install puma") em seguida. Como eu segui esses passos, eu não sei dizer se realmente são necessários e se a sequencia precisa ser: 1- Desinstalação do "puma"; 2- Instalação dos pacotes SSL; e, 3- Reinstalação do "puma".
+Caso tenha problemas em iniciar o servidor como será apresentado em seguida, mesmo após instalar os pacotes SSL, tente desinstalar e reinstalar o "puma".
 
 sudo apt-get install openssl
 sudo apt-get install libssl-dev
 
-## Preparing to run
+## Configurações de delegação de autenticação (OAuth)
 
-Now we can execute the further steps to get this application up and running throug the execution of following commands:
+No arquivo de inicialização do Omniauth, encontrado na pasta config/initializers/omniauth.rb, são utilizadas variáveis de ambiente para informar os pares de chave "key" e segredo "secret" que identificam as aplicações de autenticação registradas no Facebook e no Twitter.
+
+Para que a autenticação funcione, serão necessários os seguintes passos:
+
+1- Crie o arquivo "config/application.yml", utilizado pelo "figaro" para gerenciar variáveis de ambiente, copiando o arquivo "config/application.yml.sample".
+2- Substitua as variáveis do arquivo "config/application.yml" por chaves e segredos válidos de aplicações funcionais do Facebook e Twitter.
+
+A criação de aplicações para delegação de autenticação no Facebook e Twitter é explicada com detalhes no site "https://www.sitepoint.com/rails-authentication-oauth-2-0-omniauth/".
+
+Os passos para criação da aplicação Facebook não estão tão atualizados, mas seguem abaixo:
+
+1- Acesse: https://developers.facebook.com/.
+2- Utilize a opção "Adicionar novo aplicativo" do menu "Meus Aplicativos" no canto superior direito.
+3- Entre com um nome para a sua aplicação e o seu email de contato e clique em "Criar Identificação do Aplicativo".
+4- Na lista de produtos para adição, clique no botão "Configurar" do produto "Login do Facebook".
+5- A próxima tela pergunta a plataforma dessa aplicação. Escolha "www" ou "Web".
+6- Informe a URL do site. No nosso caso https://localhost:3000/. Clique em salvar.
+7- Desconsidere as outras abas da configuração inicial e acesse a opção "Configurações\Básico" do lado esquerdo da tela.
+8- Informe "localhost" no campo "Domínios do Aplicativo" e clique em "Salvar Alterações".
+9- Clique no produto "Login do Facebook" (do lado esquerdo e mais abaixo), e acesse a opção "Configurações".
+10- Informe "https://localhost:3000/auth/facebook/callback" no campo "URIs de redirecionamento do OAuth válidos" e clique em "Salvar Alterações".
+11- Retorne à opção "Configurações\Básico" (no canto esquerdo e superior) e informe alguma URL válida no campo "URL da Política de Privacidade" e clique em "Salvar Alterações" (isso é necessário para o último passo que é a ativação da aplicação).
+12- No topo da tela clique em "Desativado" para ativar a aplicação. Escolha uma categoria e cliente em "Confirmar".
+13- Ufa... É isso aí. A sua aplicação deve estar pronta para uso!!!!! Basta você pegar a chave "key" no campo "ID do Aplicativo" e o segredo "secret" no campo "Chave Secreta do Aplicativo" acessando novamente a opção "Configurações\Básico" (no canto esquerdo e superior).
+
+## Passos finais
+
+Agora nós podemos executar os passos finais para subir a nossa aplicação através dos seguintes comandos:
 
 $ bundle install
 
-and
+e
 
 $ rake db:migrate
 
-After all that, we can finally start the server using the command: 
+Finalmente, inicie o servidor através do comando abaixo: 
 
 rails server -b 'ssl://localhost:3000?key=.ssl/localhost.key&cert=.ssl/localhost.crt'
 
-## Notes:
+## Observações:
 
-1- If some problem happens while starting the server with command above, try to uninstall "puma" gem and install it again.
-
-2- I've provided only one unit test that could be found under "<APP_FOLDER>/test/helpers/sale_record_file_parser_test.rb", which can be tested through command:
+1- Os seguintes testes unitários dos modelos e helpers foram disponibilizados:
 
 rails test test/helpers/sale_record_file_parser_test.rb
+rails test test/models/user_test.rb 
+rails test test/models/sale_record_test.rb
 
-3- Testing files can be found at folder: "test/resources/". Some with different extensions to fall into mime verification and some variations of the example file with wrong number of columns and invalid data.
+2- Alguns exemplos de arquivos com informações inválidas ou quantidade de colunas errada, etc, podem ser encontrados na pasta test/resources. Alguns possuem extensões diferentes da esperada para que caiam na validação MIME.
 
 ENJOY!
 
