@@ -31,3 +31,7 @@
 
 # Ignore application configuration
 /config/application.yml
+
+# Ignore rspec results file.
+/spec/examples.txt
+

@@ -17,7 +17,7 @@ Alguns exemplos de arquivos com informações inválidas ou quantidade de coluna
 
 Uma das validações que achei relevante realizar antes do processamento do arquivo foi a validação do "MIME type". Para isso, foi utilizada a biblioteca "ruby-filemagic" que, por sua vez, exigiu a instalação do pacote de dependência abaixo:
 
-sudo apt-get install libmagic-dev
+$ sudo apt-get install libmagic-dev
 
 Essa aplicação precisa ser iniciada com suporte a SSL, o que se tornou obrigatório no processo de delegação de autenticação do Facebook.\
 Por conta disso, o pacote openssl precisa ser instalado através dos seguintes comandos:
@@ -26,8 +26,8 @@ Por conta disso, o pacote openssl precisa ser instalado através dos seguintes c
 Encontrei instruções que recomendavam a desinstalação do "puma" ("gem uninstall puma") antes de instalar os pacotes do SSL, e reinstalação ("gem install puma") em seguida. Como eu segui esses passos, eu não sei dizer se realmente são necessários e se a sequencia precisa ser: 1- Desinstalação do "puma"; 2- Instalação dos pacotes SSL; e, 3- Reinstalação do "puma".\
 Caso tenha problemas em iniciar o servidor como será apresentado em seguida, mesmo após instalar os pacotes SSL, tente desinstalar e reinstalar o "puma".
 
-sudo apt-get install openssl\
-sudo apt-get install libssl-dev
+$ sudo apt-get install openssl\
+$ sudo apt-get install libssl-dev
 
 ## Configurações de delegação de autenticação (OAuth)
 
@@ -74,11 +74,15 @@ rails server -b 'ssl://localhost:3000?key=.ssl/localhost.key&cert=.ssl/localhost
 
 1- Os seguintes testes unitários dos modelos e helpers foram disponibilizados:
 
-rails test test/helpers/sale_record_file_parser_test.rb\
-rails test test/models/user_test.rb\
-rails test test/models/sale_record_test.rb
+$ rails test test/helpers/sale_record_file_parser_test.rb\
+$ rails test test/models/user_test.rb\
+$ rails test test/models/sale_record_test.rb
 
-2- Alguns exemplos de arquivos com informações inválidas ou quantidade de colunas errada, etc, podem ser encontrados na pasta test/resources. Alguns possuem extensões diferentes da esperada para que caiam na validação MIME.
+2- Testes dos controlers utilizando RSpec podem ser também executados através do comando abaixo:
+
+$ rspec
+
+3- Alguns exemplos de arquivos com informações inválidas ou quantidade de colunas errada, etc, podem ser encontrados na pasta test/resources. Alguns possuem extensões diferentes da esperada para que caiam na validação MIME.
 
 ENJOY!
 
