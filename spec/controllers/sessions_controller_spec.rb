@@ -8,6 +8,11 @@ describe SessionsController, type: :controller do
 
   describe "#create" do
 
+    it "should redirect the user to the root url" do
+      post :create, params: { provider: :facebook }
+      expect(response).to redirect_to root_url
+    end
+
     it "should successfully create a user" do
       expect{ 
         post :create, params: { provider: :facebook }
@@ -18,11 +23,6 @@ describe SessionsController, type: :controller do
       expect(session[:user_id]).to be_nil
       post :create, params: { provider: :facebook }
       expect(session[:user_id]).not_to be_nil
-    end
-
-    it "should redirect the user to the root url" do
-      post :create, params: { provider: :facebook }
-      expect(response).to redirect_to root_url
     end
 
   end

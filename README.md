@@ -80,7 +80,7 @@ $ rails test test/models/sale_record_test.rb
 
 2- Testes dos controlers utilizando RSpec podem ser também executados através do comando abaixo:
 
-$ rspec
+$ rspec --order defined
 
 3- Alguns exemplos de arquivos com informações inválidas ou quantidade de colunas errada, etc, podem ser encontrados na pasta test/resources. Alguns possuem extensões diferentes da esperada para que caiam na validação MIME.
 
