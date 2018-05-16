@@ -12,5 +12,5 @@ Rails.application.routes.draw do
 
   get '/home', to: 'pages#home'
 
-  root to: 'pages#index'
+  root to: 'pages#login'
 end
