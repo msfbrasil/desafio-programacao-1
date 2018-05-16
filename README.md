@@ -66,25 +66,27 @@ e
 
 $ rake db:migrate
 
+O diretório "tmp/uploads" é utilizado para armazenamento temporário dos arquivos a serem processados pela aplicação e deve, portanto, ser criado através do comando:
+
+$ mkdir tmp/uploads
+
 Finalmente, inicie o servidor através do comando abaixo: 
 
 rails server -b 'ssl://localhost:3000?key=.ssl/localhost.key&cert=.ssl/localhost.crt'
 
 ## Observações:
 
-1- Antes de executar os testes, o diretório "tmp/uploads" precisa ser criado.
-
-2- Os seguintes testes unitários dos modelos e helpers foram disponibilizados:
+1- Os seguintes testes unitários dos modelos e helpers foram disponibilizados:
 
 $ rails test test/helpers/sale_record_file_parser_test.rb\
 $ rails test test/models/user_test.rb\
 $ rails test test/models/sale_record_test.rb
 
-3- Testes dos controlers utilizando RSpec podem ser também executados através do comando abaixo:
+2- Testes dos controlers utilizando RSpec podem ser também executados através do comando abaixo:
 
 $ rspec --order defined
 
-4- Alguns exemplos de arquivos com informações inválidas ou quantidade de colunas errada, etc, podem ser encontrados na pasta test/resources. Alguns possuem extensões diferentes da esperada para que caiam na validação MIME.
+3- Alguns exemplos de arquivos com informações inválidas ou quantidade de colunas errada, etc, podem ser encontrados na pasta test/resources. Alguns possuem extensões diferentes da esperada para que caiam na validação MIME.
 
 ENJOY!
 
