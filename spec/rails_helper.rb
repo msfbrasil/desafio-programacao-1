@@ -9,6 +9,7 @@ require "rspec/rails"
 
 # Add additional requires below this line. Rails is not loaded until this point!
 require "capybara/rspec"
+require 'capybara/rails'
 
 # Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
@@ -26,6 +27,7 @@ omniauth_hash = { 'provider' => 'facebook',
                   'uid' => '12345',
                   'info' => {
                        'name' => 'Jane Doe',
+		       'image' => 'http://graph.facebook.com/v2.10/1850210715035716/picture',
                        'email' => 'jane.doe@thatsgood.com',
                        'nickname' => 'Jane Doe'
                    },
