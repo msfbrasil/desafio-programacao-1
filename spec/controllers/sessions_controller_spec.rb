@@ -10,7 +10,7 @@ describe SessionsController, type: :controller do
 
     it "should redirect the user to the root url" do
       post :create, params: { provider: :facebook }
-      expect(response).to redirect_to root_url
+      expect(response).to redirect_to home_url
     end
 
     it "should successfully create a user" do
