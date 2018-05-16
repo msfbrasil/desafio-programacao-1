@@ -14,5 +14,5 @@ Rails.application.routes.draw do
 
   root to: 'pages#login'
 
-  get '*path' => redirect('/')
+  get '*path' => redirect('/home')
 end
