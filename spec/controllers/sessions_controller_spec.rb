@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe SessionsController, type: :controller do
 
-  before do
+  before(:all) do
     Rails.application.env_config["omniauth.auth"] = OmniAuth.config.mock_auth[:facebook]
   end
 
@@ -28,7 +28,8 @@ describe SessionsController, type: :controller do
   end
 
   describe "#destroy" do
-    before do
+
+    before(:each) do
       post :create, params: { provider: :facebook }
     end
 
