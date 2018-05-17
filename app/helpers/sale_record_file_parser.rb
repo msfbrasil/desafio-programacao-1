@@ -5,15 +5,15 @@ class SaleRecordFileParser
     @uploadedFile = uploadedFile
     @originalFileName = originalFileName
     
-    puts 'uploadedFile = ' + @uploadedFile.to_s
-    puts 'originalFileName = ' + @originalFileName.to_s
+    #puts 'uploadedFile = ' + @uploadedFile.to_s
+    #puts 'originalFileName = ' + @originalFileName.to_s
     
   end
 
 
   def parseFile
 
-    puts 'Starging sale records file parsing process...'
+    #puts 'Starging sale records file parsing process...'
     
     @saleRecordsList = Array.new
     @rowNumber = 1
@@ -30,14 +30,14 @@ class SaleRecordFileParser
       raise Exceptions::WrongNumberOfColumnsError, 'Row [' + @rowNumber.to_s + '] has wrong number of columns [' + row.length.to_s + '].'
     end
     
-    puts 'Row has ' + row.length.to_s + ' columns, which are:'
+    #puts 'Row has ' + row.length.to_s + ' columns, which are:'
     
-    puts 'Purchaser name: ' + row[0]
-    puts 'Item description: ' + row[1]
-    puts 'Item price: ' + row[2]
-    puts 'Purchase count: ' + row[3]
-    puts 'Merchant address: ' + row[4]
-    puts 'Merchant name: ' + row[5]
+    #puts 'Purchaser name: ' + row[0]
+    #puts 'Item description: ' + row[1]
+    #puts 'Item price: ' + row[2]
+    #puts 'Purchase count: ' + row[3]
+    #puts 'Merchant address: ' + row[4]
+    #puts 'Merchant name: ' + row[5]
     
     @saleRecord = SaleRecord.new
     @saleRecord.purchaser_name = row[0]

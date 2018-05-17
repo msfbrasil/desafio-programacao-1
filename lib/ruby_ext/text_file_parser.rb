@@ -4,7 +4,6 @@ class TextFileParser
   require 'csv'
   require 'date'
   require 'filemagic'
-  #require '../exceptions'
   
   # Initializes the parser.
   # Params:
@@ -14,7 +13,7 @@ class TextFileParser
   # +headerLinesQtty+:: quantity of lines that represent the file header and must be skipped during the parsing.
   # +rowCallbackMethod+:: method to be called with the values of each file detected row on a Array.
   # +saveCopy+:: indicates if a safe copy must be performed before the file is parsed.
-  # +saveCopyBasePath+:: provides where the copy must be placed. If none is provided, the default is "./public/uploads".
+  # +saveCopyBasePath+:: provides where the copy must be placed. If none is provided, the default is "./tmp/uploads".
   #
   def initialize( parsingFile, originalFileName, fieldSeparator, headerLinesQtty, rowCallbackMethod, saveCopy, saveCopyBasePath )
     
@@ -30,22 +29,22 @@ class TextFileParser
       @saveCopyBasePath = saveCopyBasePath
     end
     
-    puts 'parsingFile = ' + @parsingFile.to_s
-    puts 'originalFileName = ' + @originalFileName.to_s
-    puts 'fieldSeparator = ' + @fieldSeparator.to_s
-    puts 'headerLinesQtty = ' + @headerLinesQtty.to_s
-    puts 'rowCallbackMethod = ' + @rowCallbackMethod.to_s
-    puts 'saveCopy = ' + @saveCopy.to_s
-    puts 'saveCopyBasePath = ' + @saveCopyBasePath.to_s
+    #puts 'parsingFile = ' + @parsingFile.to_s
+    #puts 'originalFileName = ' + @originalFileName.to_s
+    #puts 'fieldSeparator = ' + @fieldSeparator.to_s
+    #puts 'headerLinesQtty = ' + @headerLinesQtty.to_s
+    #puts 'rowCallbackMethod = ' + @rowCallbackMethod.to_s
+    #puts 'saveCopy = ' + @saveCopy.to_s
+    #puts 'saveCopyBasePath = ' + @saveCopyBasePath.to_s
     
   end
   
   def parseFile
     
-    puts 'Starging file parsing process...'
+    #puts 'Starging file parsing process...'
     
-    puts 'Detecting mime type for file = ' + File.absolute_path( @parsingFile )
-    puts 'File mime type = ' + FileMagic.new(FileMagic::MAGIC_MIME).file( File.absolute_path( @parsingFile ), true )
+    #puts 'Detecting mime type for file = ' + File.absolute_path( @parsingFile )
+    #puts 'File mime type = ' + FileMagic.new(FileMagic::MAGIC_MIME).file( File.absolute_path( @parsingFile ), true )
     
     if ( !FileMagic.new(FileMagic::MAGIC_MIME).file( File.absolute_path( @parsingFile ), true ).eql? 'text/plain' )
       raise Exceptions::InvalidFileMimeTypeError, 'Provided file has invalid mime type [' + FileMagic.new(FileMagic::MAGIC_MIME).file( File.absolute_path( @parsingFile ), true ) + '].'
@@ -57,7 +56,7 @@ class TextFileParser
       processing_file = saveCopyOfFile
     end
     
-    puts 'Processing file = ' + processing_file.to_s
+    #puts 'Processing file = ' + processing_file.to_s
     
     begin
       
@@ -92,7 +91,7 @@ class TextFileParser
   
   def saveCopyOfFile
     
-    puts 'Creating file copy...'
+    #puts 'Creating file copy...'
     
     current_date = DateTime.parse(Time.now.to_s)
     
@@ -104,13 +103,13 @@ class TextFileParser
       file_base_name = File.basename( @originalFileName, file_extension )
     end
     
-    puts 'file_extension = ' + file_extension
-    puts 'file_base_name = ' + file_base_name
-    puts 'saveCopyBasePath = ' + @saveCopyBasePath.to_s
-    puts 'File data sufix = ' + current_date.strftime("%F-%T")
+    #puts 'file_extension = ' + file_extension
+    #puts 'file_base_name = ' + file_base_name
+    #puts 'saveCopyBasePath = ' + @saveCopyBasePath.to_s
+    #puts 'File data sufix = ' + current_date.strftime("%F-%T")
     
     new_file_name = @saveCopyBasePath.to_s + "/" + file_base_name + "_" + current_date.strftime("%F-%T") + file_extension
-    puts 'New file name: ' + new_file_name.to_s
+    #puts 'New file name: ' + new_file_name.to_s
     File.open(new_file_name, 'wb') do |file|
       file.write(@parsingFile.read)
       return file
