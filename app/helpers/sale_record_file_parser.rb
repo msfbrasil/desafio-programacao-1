@@ -1,33 +1,32 @@
 class SaleRecordFileParser
   
-  def initialize( uploadedFile, originalFileName )
+  def initialize( uploaded_file, original_file_name )
     
-    @uploadedFile = uploadedFile
-    @originalFileName = originalFileName
+    @uploaded_file = uploaded_file
+    @original_file_name = original_file_name
     
-    #puts 'uploadedFile = ' + @uploadedFile.to_s
-    #puts 'originalFileName = ' + @originalFileName.to_s
+    #puts 'uploaded_file = ' + @uploaded_file.to_s
+    #puts 'original_file_name = ' + @original_file_name.to_s
     
   end
 
-
-  def parseFile
+  def parse_file
 
     #puts 'Starging sale records file parsing process...'
     
-    @saleRecordsList = Array.new
-    @rowNumber = 1
+    @sale_records_list = Array.new
+    @row_number = 1
 
-    TextFileParser.new( @uploadedFile, @originalFileName, { :col_sep => "\t" }, 1, method(:rowParser), true, nil ).parseFile
+    TextFileParser.new( @uploaded_file, @original_file_name, { :col_sep => "\t" }, 1, method(:row_parser), true, nil ).parse_file
     
-    return @saleRecordsList
+    return @sale_records_list
     
   end
   
-  def rowParser( row )
+  def row_parser( row )
     
     if ( row.length != 6 )
-      raise Exceptions::WrongNumberOfColumnsError, 'Row [' + @rowNumber.to_s + '] has wrong number of columns [' + row.length.to_s + '].'
+      raise Exceptions::WrongNumberOfColumnsError, 'Row [' + @row_number.to_s + '] has wrong number of columns [' + row.length.to_s + '].'
     end
     
     #puts 'Row has ' + row.length.to_s + ' columns, which are:'
@@ -39,25 +38,25 @@ class SaleRecordFileParser
     #puts 'Merchant address: ' + row[4]
     #puts 'Merchant name: ' + row[5]
     
-    @saleRecord = SaleRecord.new
-    @saleRecord.purchaser_name = row[0]
-    @saleRecord.item_description = row[1]
+    @sale_record = SaleRecord.new
+    @sale_record.purchaser_name = row[0]
+    @sale_record.item_description = row[1]
     begin
-      @saleRecord.item_price = BigDecimal.new( row[2] )
+      @sale_record.item_price = BigDecimal.new( row[2] )
     rescue StandardError
-      raise Exceptions::InvalidFieldError, 'Item price with invalid value [' + row[2] + '] at row [' + @rowNumber.to_s + '].'
+      raise Exceptions::InvalidFieldError, 'Item price with invalid value [' + row[2] + '] at row [' + @row_number.to_s + '].'
     end
     begin
-      @saleRecord.purchase_count = Integer( row[3] )
+      @sale_record.purchase_count = Integer( row[3] )
     rescue StandardError
-      raise Exceptions::InvalidFieldError, 'Purchase count with invalid value [' + row[3] + '] at row [' + @rowNumber.to_s + '].'
+      raise Exceptions::InvalidFieldError, 'Purchase count with invalid value [' + row[3] + '] at row [' + @row_number.to_s + '].'
     end
-    @saleRecord.merchant_address = row[4]
-    @saleRecord.merchant_name = row[5]
+    @sale_record.merchant_address = row[4]
+    @sale_record.merchant_name = row[5]
     
-    @saleRecordsList << @saleRecord
+    @sale_records_list << @sale_record
     
-    @rowNumber += 1
+    @row_number += 1
     
   end
   

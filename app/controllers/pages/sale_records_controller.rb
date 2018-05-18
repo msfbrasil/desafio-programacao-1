@@ -30,13 +30,13 @@ module Pages
       
       begin
         
-        saleRecordsList = SaleRecordFileParser.new( uploaded_io['datafile'].tempfile, uploaded_io['datafile'].original_filename ).parseFile
+        sale_records_list = SaleRecordFileParser.new( uploaded_io['datafile'].tempfile, uploaded_io['datafile'].original_filename ).parse_file
         
-        saleRecordsList.each { | saleRecord | 
+        sale_records_list.each { | sale_record | 
           
-          @total_value += ( saleRecord.item_price * saleRecord.purchase_count )
+          @total_value += ( sale_record.item_price * sale_record.purchase_count )
           
-          saleRecord.save
+          sale_record.save
         }
         
         flash[:success] = "File has been uploaded successfully and total value is: " + @total_value.to_s
