@@ -1,3 +1,0 @@
-class InvalidFileFormatError < ArgumentError
-end
-

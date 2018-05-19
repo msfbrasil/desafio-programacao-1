@@ -1,3 +1,0 @@
-class InvalidFileMimeTypeError < ArgumentError
-end
-
