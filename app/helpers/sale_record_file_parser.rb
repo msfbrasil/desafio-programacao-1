@@ -4,8 +4,8 @@ class SaleRecordFileParser < TextFileParser
 
   def initialize( uploaded_file, original_file_name )
 
-    #puts 'uploaded_file = ' + uploaded_file.to_s
-    #puts 'original_file_name = ' + original_file_name.to_s
+    Rails.logger.debug 'uploaded_file = ' + uploaded_file.to_s
+    Rails.logger.debug 'original_file_name = ' + original_file_name.to_s
 
     super( uploaded_file, original_file_name, { :col_sep => "\t" }, 1, true, nil )
 
@@ -17,7 +17,7 @@ class SaleRecordFileParser < TextFileParser
 
   def get_sale_records_list
 
-    #puts 'Starging sale records file parsing process...'
+    Rails.logger.info 'Starging sale records file parsing process...'
 
     parse_file
 
@@ -31,14 +31,11 @@ class SaleRecordFileParser < TextFileParser
       raise Exceptions::WrongNumberOfColumnsError, 'Row [' + row_number.to_s + '] has wrong number of columns [' + row.length.to_s + '].'
     end
 
-    #puts 'Row has ' + row.length.to_s + ' columns, which are:'
+    Rails.logger.debug 'Row has ' + row.length.to_s + ' columns, which are:'
 
-    #puts 'Purchaser name: ' + row[0]
-    #puts 'Item description: ' + row[1]
-    #puts 'Item price: ' + row[2]
-    #puts 'Purchase count: ' + row[3]
-    #puts 'Merchant address: ' + row[4]
-    #puts 'Merchant name: ' + row[5]
+    Rails.logger.debug 'Purchaser name: ' + row[0] + ', Item description: ' 
+      + row[1] + ', Item price: ' + row[2] + ', Purchase count: ' + row[3] 
+      + ',Merchant address: ' + row[4] + ',Merchant name: ' + row[5]
 
     @sale_record = SaleRecord.new
     @sale_record.purchaser_name = row[0]

@@ -12,7 +12,7 @@ class User < ApplicationRecord
         user.location = auth_hash['info']['location']
         user.url = auth_hash['info']['urls'][user.provider.capitalize]
       rescue
-        puts user.provider + " don't have location or url fields."
+        Rails.logger.info user.provider + " don't have location or url fields."
       end
       user.save!
       user

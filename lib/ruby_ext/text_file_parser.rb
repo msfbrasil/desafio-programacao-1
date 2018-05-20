@@ -27,21 +27,21 @@ class TextFileParser
       @save_copy_base_path = save_copy_base_path
     end
 
-    #puts 'parsing_file = ' + @parsing_file.to_s
-    #puts 'original_file_name = ' + @original_file_name.to_s
-    #puts 'field_separator = ' + @field_separator.to_s
-    #puts 'header_lines_qtty = ' + @header_lines_qtty.to_s
-    #puts 'save_copy = ' + @save_copy.to_s
-    #puts 'save_copy_base_path = ' + @save_copy_base_path.to_s
+    Rails.logger.debug 'parsing_file = ' + @parsing_file.to_s
+    Rails.logger.debug 'original_file_name = ' + @original_file_name.to_s
+    Rails.logger.debug 'field_separator = ' + @field_separator.to_s
+    Rails.logger.debug 'header_lines_qtty = ' + @header_lines_qtty.to_s
+    Rails.logger.debug 'save_copy = ' + @save_copy.to_s
+    Rails.logger.debug 'save_copy_base_path = ' + @save_copy_base_path.to_s
 
   end
 
   def parse_file
 
-    #puts 'Starging file parsing process...'
+    Rails.logger.info 'Starging file parsing process...'
 
-    #puts 'Detecting mime type for file = ' + File.absolute_path( @parsing_file )
-    #puts 'File mime type = ' + FileMagic.new(FileMagic::MAGIC_MIME).file( File.absolute_path( @parsing_file ), true )
+    Rails.logger.debug 'Detecting mime type for file = ' + File.absolute_path( @parsing_file )
+    Rails.logger.debug 'File mime type = ' + FileMagic.new(FileMagic::MAGIC_MIME).file( File.absolute_path( @parsing_file ), true )
 
     if ( !FileMagic.new(FileMagic::MAGIC_MIME).file( File.absolute_path( @parsing_file ), true ).eql? 'text/plain' )
       raise Exceptions::InvalidFileMimeTypeError, 'Provided file has invalid mime type [' + FileMagic.new(FileMagic::MAGIC_MIME).file( File.absolute_path( @parsing_file ), true ) + '].'
@@ -53,7 +53,7 @@ class TextFileParser
       processing_file = save_copy_of_file
     end
 
-    #puts 'Processing file = ' + processing_file.to_s
+    Rails.logger.info 'Processing file = ' + processing_file.to_s
 
     begin
 
@@ -98,7 +98,7 @@ private
 
   def save_copy_of_file
 
-    #puts 'Creating file copy...'
+    Rails.logger.info 'Creating file copy...'
 
     current_date = DateTime.parse(Time.now.to_s)
 
@@ -110,13 +110,15 @@ private
       file_base_name = File.basename( @original_file_name, file_extension )
     end
 
-    #puts 'file_extension = ' + file_extension
-    #puts 'file_base_name = ' + file_base_name
-    #puts 'save_copy_base_path = ' + @save_copy_base_path.to_s
-    #puts 'File data sufix = ' + current_date.strftime("%F-%T")
+    Rails.logger.debug 'file_extension = ' + file_extension
+    Rails.logger.debug 'file_base_name = ' + file_base_name
+    Rails.logger.debug 'save_copy_base_path = ' + @save_copy_base_path.to_s
+    Rails.logger.debug 'File data sufix = ' + current_date.strftime("%F-%T")
 
     new_file_name = @save_copy_base_path.to_s + "/" + file_base_name + "_" + current_date.strftime("%F-%T") + file_extension
-    #puts 'New file name: ' + new_file_name.to_s
+
+    Rails.logger.info 'New file name: ' + new_file_name.to_s
+
     File.open(new_file_name, 'wb') do |file|
       file.write(@parsing_file.read)
       return file

@@ -21,10 +21,7 @@ module Pages
 
       end
 
-      #puts 'Uploaded_io is a Class of type: ' + uploaded_io.class.to_s
-      #puts 'Uploaded_io[datafile] is a Class of type: ' + uploaded_io['datafile'].class.to_s
-      #puts 'Uploaded_io[datafile].tempfile is a Class of type: ' + uploaded_io['datafile'].tempfile.class.to_s
-      #puts 'Uploaded_io[datafile].original_filename = ' + uploaded_io['datafile'].original_filename
+      Rails.logger.debug 'Uploaded_io[datafile].original_filename = ' + uploaded_io['datafile'].original_filename
 
       @total_value = BigDecimal.new("0")
 
@@ -44,6 +41,8 @@ module Pages
         redirect_to pages_salerecords_path
 
       rescue StandardError => e
+
+        Rails.logger.error "Failure detected while parsing file with message: " + e.message
 
         flash[:danger] = "Failure detected while parsing file with message: " + e.message
 
